@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Todo App</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+
+    <!-- Alpine -->
+    <script defer
+        src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js">
+    </script>
+</head>
+
+<body class="bg-gray-100">
+
+<div class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded shadow">
+
+    <h1 class="text-3xl font-bold mb-5 text-center">
+        Todo App
+    </h1>
+
+    <!-- ADD TODO -->
+
+    <form
+        hx-post="{% url 'add_todo' %}"
+        hx-target="#todo-list"
+        hx-swap="innerHTML"
+        class="flex gap-2 mb-5"
+        x-data="{ title: '' }">
+
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="title"
+            x-model="title"
+            placeholder="Enter todo"
+            class="border p-2 rounded w-full"
+            required>
+
+        <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 rounded">
+            Add
+        </button>
+
+    </form>
+
+    <!-- TODO LIST -->
+
+    <div id="todo-list">
+
+        {% include 'todo_list.html' %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
